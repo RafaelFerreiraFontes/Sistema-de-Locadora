@@ -10,8 +10,7 @@ abstract class Operacoes
         produtos = p;
     }
 
-    abstract public boolean RetirarProduto(String codigo);
-    abstract public boolean RetirarProduto(String[] categoria);
+    abstract public boolean RetirarProduto(String codigo,int qntProd);
 }
 
 class Vende extends Operacoes
@@ -23,35 +22,40 @@ class Vende extends Operacoes
     }
 
     @Override
-    public boolean RetirarProduto(String codigo) 
+    public boolean RetirarProduto(String codigo,int qntProd) 
     {
-        return false;
-    }
 
-    @Override
-    public boolean RetirarProduto(String[] categoria) 
-    {
+        for(Produto p : produtos)
+        {
+            if(p.Getcodigo().equals(codigo))
+            {
+                if(p.SetqntTotal(qntProd))
+                {
+                    if(p.GetqntTotal() == 0)
+                        Operacoes.produtos.remove(p);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }    
+        }
+
         return false;
     }
 }
 
 class Aluga extends Operacoes
-{
-    private static HashMap<String,Integer> alugados;
-    
+{ 
     public Aluga(ArrayList<Produto> prods)
     {
         super(prods);
     }
-
-    @Override
-    public boolean RetirarProduto(String[] categoria)
-    {
-        return false;
-    }
     
     @Override
-    public boolean RetirarProduto(String codigo)
+    public boolean RetirarProduto(String codigo,int qntProd)
     {
         return false;
     }

@@ -8,6 +8,7 @@ abstract class Produto
     private float preco;
     private float desconto;
     private int qnt; 
+    private int qntOcupada;
 
     public Produto(float preco, float desconto, int qnt, String titulo, String anoDeLancamento, String categoria,String codigo)
     {
@@ -35,6 +36,42 @@ abstract class Produto
             this.Setpreco(this.preco);
         }
              
+    }
+
+    public int GetqntTotal(){
+        
+        return qnt;
+    
+    }
+
+    public int GetqntDisponivel()
+    {
+        return (this.qnt - this.qntOcupada);
+    }
+
+    public boolean SetqntDisponivel(int n)
+    {
+        if(GetqntDisponivel() > 0)
+        {
+            qntOcupada += n;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean SetqntTotal(int n)
+    {
+        if(GetqntDisponivel() > 0)
+        {
+            qntOcupada -= n;
+            qnt -= n;
+
+            return true;
+        }
+
+        return false;
     }
 
     public String Getcodigo()
